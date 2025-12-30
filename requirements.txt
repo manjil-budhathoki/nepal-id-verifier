@@ -1,4 +1,3 @@
-python=3.10.13
 streamlit
 ultralytics
 opencv-python-headless
@@ -9,3 +8,6 @@ paddlepaddle
 python-doctr
 nepali-datetime
 torch>=2.1,<2.3
+fastapi
+uvicorn
+
