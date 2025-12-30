@@ -1,7 +1,7 @@
 # src/ocr/processor.py
 import cv2
 import numpy as np
-from .engine_factory import get_doctr_model, get_easyocr_ne, get_easyocr_en
+from .engine_factory import get_doctr_model, get_paddleocr_ne, get_paddleocr_en
 
 def ensure_rgb(image):
     """Converts grayscale (2D) to RGB (3D)."""

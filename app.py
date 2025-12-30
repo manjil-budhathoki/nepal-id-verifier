@@ -3,7 +3,13 @@ import requests
 from PIL import Image
 
 # --- CONFIG ---
-API_URL = "http://localhost:8000/verify"
+import os
+
+API_URL = os.getenv(
+    "BACKEND_URL",
+    "http://localhost:8000/verify"  # fallback for local dev
+)
+BACKEND_URL = "https://nepal-id-verifier.onrender.com/verify"
 
 st.set_page_config(page_title="ID Audit Pro", layout="wide")
 
