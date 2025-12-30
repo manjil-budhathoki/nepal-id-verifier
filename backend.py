@@ -17,7 +17,7 @@ from PIL import Image, ImageOps
 
 # Import your existing logic
 from src.detection.yolo_detector import detect_regions, process_cards, prepare_ocr_targets, load_yolo_model
-from src.ocr.engine_factory import get_doctr_model, get_easyocr_ne, get_easyocr_en
+from src.ocr.engine_factory import get_doctr_model, get_paddleocr_ne, get_paddleocr_en
 from src.ocr.processor import run_ocr
 from src.ocr.normalizer import process_robust_text
 from src.extraction.field_extractor import extract_structured_data
@@ -29,8 +29,8 @@ async def lifespan(app: FastAPI):
     # Trigger model loading
     load_yolo_model()
     get_doctr_model()
-    get_easyocr_ne()
-    get_easyocr_en()
+    get_paddleocr_ne()
+    get_paddleocr_en()
     print("✅ Models Loaded & Ready!")
     yield
     print("🛑 Shutting down...")

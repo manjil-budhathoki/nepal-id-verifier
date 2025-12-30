@@ -7,7 +7,7 @@ def get_doctr_model():
     return ocr_predictor(pretrained=True)
 
 @st.cache_resource
-def get_easyocr_ne():
+def get_paddleocr_ne():
     # Nepali Configuration
     ocr = PaddleOCR(
         lang='ne', 
@@ -23,7 +23,7 @@ def get_easyocr_ne():
     return ocr
 
 @st.cache_resource
-def get_easyocr_en():
+def get_paddleocr_en():
     # English Configuration
     ocr = PaddleOCR(
         lang='en', 
