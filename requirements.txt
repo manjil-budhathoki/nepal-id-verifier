@@ -3,8 +3,8 @@ ultralytics
 opencv-python-headless
 numpy<2.0.0
 pillow
-easyocr
+paddleocr
+paddlepaddle
 python-doctr
 nepali-datetime
-torch==2.2.2
-torchvision==0.17.2
+torch>=2.1,<2.3
