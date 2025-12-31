@@ -70,7 +70,7 @@ def run_ocr(target):
         engine = "doctr"
         
         if not text:
-            reader = get_easyocr_en()
+            reader = get_paddleocr_en()
             try:
                 paddle_results = reader.predict(crop)
             except AttributeError:
@@ -84,7 +84,7 @@ def run_ocr(target):
         result["engine"] = engine
     else:
         # Nepali
-        reader = get_easyocr_ne()
+        reader = get_paddleocr_ne()
         try:
             paddle_results = reader.predict(crop)
         except AttributeError:

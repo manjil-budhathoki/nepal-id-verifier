@@ -9,7 +9,7 @@ API_URL = os.getenv(
     "BACKEND_URL",
     "http://localhost:8000/verify"  # fallback for local dev
 )
-BACKEND_URL = "https://nepal-id-verifier.onrender.com/verify"
+# BACKEND_URL = "https://nepal-id-verifier.onrender.com/verify"
 
 st.set_page_config(page_title="ID Audit Pro", layout="wide")
 
@@ -98,3 +98,9 @@ if uploaded_file:
                     st.error("❌ Could not connect to Backend. Is 'backend.py' running?")
                 except Exception as e:
                     st.error(f"An unexpected error occurred: {e}")
+
+if __name__ != "__main__":
+
+    raise RuntimeError(
+        "app.py must be run with: streamlit run app.py  "
+    )
