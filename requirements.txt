@@ -10,4 +10,5 @@ nepali-datetime
 torch>=2.1,<2.3
 fastapi
 uvicorn
+python-multipart
 
