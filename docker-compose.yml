@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # 1. The Database
+  db:
+    image: postgres:15-alpine
+    container_name: id_verify_db
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=id_verification_db
+    # Persist data so it survives restart
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+
+  # 2. Your API
+  api:
+    build: .
+    container_name: id_verify_api
+    depends_on:
+      - db  # Wait for DB to start
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+      - ./debug_crops:/app/debug_crops
+    environment:
+      - MODE=prod
+      # CONNECT TO POSTGRES (postgresql://user:pass@servicename:port/dbname)
+      - DATABASE_URL=postgresql://myuser:mypassword@db:5432/id_verification_db
+      - YOLO_MODEL_PATH=models/yolo/best.pt
+      - USE_GPU=False
+    restart: always
+
+# Define the volume for the DB
+volumes:
+  postgres_data:

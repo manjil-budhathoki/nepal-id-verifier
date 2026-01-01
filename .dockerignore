@@ -1,0 +1,12 @@
+__pycache__
+*.pyc
+.git
+.gitignore
+.env
+id_verify_env/
+venv/
+test_dataset/
+debug_crops/
+debug_paddle.py
+benchmark.py
+benchmark_bulk.py

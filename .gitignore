@@ -1,2 +1,35 @@
+# Python
 __pycache__/
-Results/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+id_verify_env/
+
+# Database (NEVER upload real DBs)
+*.db
+*.sqlite3
+production.db
+
+# Runtime Data
+debug_crops/
+test_dataset/
+
+# Environment Variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+.docker/
+
+test_dataset/
+debug_crops/
+
+debug_paddle.py
+
+benchmark_bulk.py

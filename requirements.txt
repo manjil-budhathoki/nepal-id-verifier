@@ -1,14 +1,32 @@
-streamlit
-ultralytics
-opencv-python-headless
-numpy<2.0.0
-pillow
-paddleocr
-paddlepaddle
-python-doctr
-nepali-datetime
-torch>=2.1,<2.3
 fastapi
-uvicorn
+uvicorn[standard]
+gunicorn
 python-multipart
+pydantic-settings
+psycopg2-binary==2.9.9
+
+# Database
+sqlalchemy
+
+# image processing
+opencv-python-headless
+Pillow
+numpy
+
+
+# machine learning
+
+ultralytics
+
+paddlepaddle
+paddleocr
+
+
+
+nepali-datetime
+requests
+
+
+streamlit
+pandas
 
