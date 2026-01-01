@@ -1,15 +1,15 @@
-import streamlit as st
 from paddleocr import PaddleOCR
-from doctr.models import ocr_predictor
+from app.core.config import settings
 
-@st.cache_resource
-def get_doctr_model():
-    return ocr_predictor(pretrained=True)
+# Global instances
+_PADDLE_NE = None
+_PADDLE_EN = None
+def load_engines():
+    """Loads all OCR engines into memory."""
+    global _PADDLE_NE, _PADDLE_EN, _DOCTR
 
-@st.cache_resource
-def get_paddleocr_ne():
-    # Nepali Configuration
-    ocr = PaddleOCR(
+    print("Loading Paddle (NE)...")
+    _PADDLE_NE = PaddleOCR(
         lang='ne', 
         # Explicitly disable dangerous features for CPU
         use_doc_orientation_classify=False,
@@ -18,14 +18,11 @@ def get_paddleocr_ne():
         # use_angle_cls=False,          # <--- REMOVED (Conflicting Argument)
         enable_mkldnn=False,            # <--- Disable MKLDNN to prevent crashes
         # use_gpu=False,                  # <--- Ensure CPU mode
-        rec_batch_num=1                 # <--- Process 1 image at a time (safer)
+        rec_batch_num=1   
     )
-    return ocr
-
-@st.cache_resource
-def get_paddleocr_en():
-    # English Configuration
-    ocr = PaddleOCR(
+    
+    print("Loading Paddle (EN)...")
+    _PADDLE_EN = PaddleOCR(
         lang='en', 
         use_doc_orientation_classify=False,
         use_doc_unwarping=False,
@@ -35,4 +32,11 @@ def get_paddleocr_en():
         # use_gpu=False,
         rec_batch_num=1
     )
-    return ocr
+
+def get_paddle_ne():
+    if _PADDLE_NE is None: load_engines()
+    return _PADDLE_NE
+
+def get_paddle_en():
+    if _PADDLE_EN is None: load_engines()
+    return _PADDLE_EN
