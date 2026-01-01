@@ -1,93 +1,65 @@
-# ID Verification & Audit System (Nepal)
+# Nepal ID Verifier
 
-A hybrid OCR and object detection pipeline designed to verify Nepali Citizenship IDs against user input. It handles both English and Nepali (Devanagari) scripts, performs cross-calendar conversion (AD/BS), and uses phonetic skeleton matching for name verification.
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-Production-009688)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## ⚡ Key Capabilities
+A production-grade microservice for automated Nepali Citizenship verification using Hybrid AI.
 
-* **Object Detection:** Identifies ID cards and crops regions (Photo, Text Blocks) using YOLOv8.
-* **Hybrid OCR:** Uses **PaddleOCR** (v3/v4) for Nepali/English and **Doctr** as an English fallback.
-* **Dual-Script Verification:** Matches user input (English) against ID text (Nepali) using phonetic consonant skeleton algorithms.
-* **Date Conversion:** Automatically validates Dates of Birth by converting between AD and BS (Nepali) calendars.
-* **Architecture:** Decoupled architecture with **FastAPI** (Backend/Model Server) and **Streamlit** (Frontend/UI).
+---
 
-## 🛠 Tech Stack
+## Introduction
 
-* **Language:** Python 3.10
-* **Backend:** FastAPI, Uvicorn
-* **Frontend:** Streamlit
-* **ML/OCR:** Ultralytics YOLOv8, PaddleOCR, Doctr, OpenCV
-* **Logic:** `nepali_datetime`, `difflib` (Fuzzy matching)
+**Nepal ID Verifier** digitizes the KYC process by extracting and verifying data from Citizenship Certificates in real-time.
 
-## 📂 Project Structure
+Refactored from a prototype into a scalable architecture, it utilizes **YOLOv8** for smart detection and **PaddleOCR** for high-precision bilingual extraction (English & Nepali). The system handles cross-calendar conversion (AD/BS) and phonetic matching to ensure accurate verification.
 
-```text
-/
-├── backend.py            # FastAPI Model Server (Handles heavy lifting)
-├── app.py                # Streamlit Client (UI)
-├── models/               # YOLO .pt files
-├── src/
-│   ├── detection/        # YOLO inference logic
-│   ├── ocr/              # OCR engines (Paddle/Doctr) & logic
-│   ├── extraction/       # Field matching & verification logic
-│   └── utils/            # Image preprocessing
-└── requirements.txt      # Project dependencies
-```
 
-## 🚀 Installation
+## Key Features
 
-1. **Clone & Environment**
+- 🚀 **Production Architecture:** Fully containerized with Docker & PostgreSQL.
+- 🧠 **Smart Extraction:** Hybrid pipeline (YOLOv8 + PaddleOCR v5) for bilingual text.
+- 📅 **Date Logic:** Automated conversion and verification between Gregorian (AD) and Bikram Sambat (BS).
+- 🛡️ **Fuzzy Matching:** Phonetic skeleton analysis to handle spelling variations.
+- ⚡ **High Performance:** Optimized inference engine (< 3s average latency).
 
-    ```bash
-    conda create -n id_verify_env python=3.10
-    conda activate id_verify_env
-    pip install -r requirements.txt
-    ```
+## Tech Stack
 
-2. **System Dependencies (Linux)**
-    PaddleOCR requires specific libraries.
+- **Core:** Python 3.10, FastAPI, Gunicorn
+- **ML:** Ultralytics YOLOv8, PaddleOCR (Headless)
+- **Database:** PostgreSQL, SQLAlchemy
+- **Infrastructure:** Docker, Docker Compose
 
-    ```bash
-    sudo apt-get install libgl1-mesa-glx libgomp1
-    ```
+## Quick Start
 
-## 🏃‍♂️ How to Run
-
-This project requires two terminals running simultaneously.
-
-**Terminal 1: Start the Backend (API)**
-This loads the ML models into memory.
+Run the entire system (API + Database) with a single command.
 
 ```bash
-python -m uvicorn backend:app --reload --port 8000
+# 1. Clone the repository
+git clone https://github.com/manjil-budhathoki/nepal-id-verifier.git
 ```
-
-*Wait until you see "Application startup complete".*
-
-**Terminal 2: Start the Frontend (UI)**
 
 ```bash
-streamlit run app.py
-```
-Access the UI at `http://localhost:8501`.
-
-## ⚠️ Important Configuration
-
-**PaddleOCR Instability on Linux:**
-To prevent C++ crashes (`std::exception`), specific environment variables are forced in `backend.py`. **Do not remove these lines:**
-
-```python
-
-os.environ["FLAGS_use_mkldnn"] = "0"
-os.environ["OMP_NUM_THREADS"] = "1"
+cd nepal-id-verifier
 ```
 
-## 📝 Usage logic
+# 2. Start services
 
-1. **Frontend:** User enters Name, ID, and DOB, and uploads an image.
-2. **API:** Image is sent to FastAPI.
-3. **Pipeline:**
-    * Image is converted to RGB & Contiguous Memory.
-    * YOLO crops the ID.
-    * PaddleOCR extracts Raw Text.
-    * `field_extractor.py` performs Consonant Skeleton matching (e.g., "Manjil" == "मन्जिल").
-4. **Result:** JSON report is returned with match scores (0-100%).
+```bash
+docker compose up --build
+```
+
+The API will be live at: `http://localhost:8000`
+
+## API Documentation
+
+Interactive Swagger documentation is available out-of-the-box.
+
+- **Docs:** [http://localhost:8000/docs](http://localhost:8000/docs)
+
+- **Health Check:** [http://localhost:8000/health](http://localhost:8000/health)
+
+---
+
+**Developed by Manjil Budhathoki**
